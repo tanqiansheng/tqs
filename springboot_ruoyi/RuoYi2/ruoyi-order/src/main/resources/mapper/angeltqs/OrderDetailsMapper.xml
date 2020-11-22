@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.angeltqs.mapper.OrderDetailsMapper">
+    
+    <resultMap type="OrderDetails" id="OrderDetailsResult">
+        <result property="goodsId"    column="goods_id"    />
+        <result property="goodsName"    column="goods_name"    />
+        <result property="goodsPrice"    column="goods_price"    />
+        <result property="goodsCount"    column="goods_count"    />
+        <result property="goodsTotalMoney"    column="goods_total_money"    />
+        <result property="goodsTax"    column="goods_tax"    />
+    </resultMap>
+
+    <sql id="selectOrderDetailsVo">
+        select goods_id, goods_name, goods_price, goods_count, goods_total_money, goods_tax from shop_order_details
+    </sql>
+
+    <select id="selectOrderDetailsList" parameterType="OrderDetails" resultMap="OrderDetailsResult">
+        <include refid="selectOrderDetailsVo"/>
+        <where>  
+            <if test="goodsName != null  and goodsName != ''"> and goods_name like concat('%', #{goodsName}, '%')</if>
+            <if test="goodsPrice != null "> and goods_price = #{goodsPrice}</if>
+            <if test="goodsCount != null "> and goods_count = #{goodsCount}</if>
+            <if test="goodsTotalMoney != null "> and goods_total_money = #{goodsTotalMoney}</if>
+            <if test="goodsTax != null "> and goods_tax = #{goodsTax}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderDetailsById" parameterType="Long" resultMap="OrderDetailsResult">
+        <include refid="selectOrderDetailsVo"/>
+        where goods_id = #{goodsId}
+    </select>
+        
+    <insert id="insertOrderDetails" parameterType="OrderDetails">
+        insert into shop_order_details
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">goods_id,</if>
+            <if test="goodsName != null">goods_name,</if>
+            <if test="goodsPrice != null">goods_price,</if>
+            <if test="goodsCount != null">goods_count,</if>
+            <if test="goodsTotalMoney != null">goods_total_money,</if>
+            <if test="goodsTax != null">goods_tax,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">#{goodsId},</if>
+            <if test="goodsName != null">#{goodsName},</if>
+            <if test="goodsPrice != null">#{goodsPrice},</if>
+            <if test="goodsCount != null">#{goodsCount},</if>
+            <if test="goodsTotalMoney != null">#{goodsTotalMoney},</if>
+            <if test="goodsTax != null">#{goodsTax},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderDetails" parameterType="OrderDetails">
+        update shop_order_details
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsName != null">goods_name = #{goodsName},</if>
+            <if test="goodsPrice != null">goods_price = #{goodsPrice},</if>
+            <if test="goodsCount != null">goods_count = #{goodsCount},</if>
+            <if test="goodsTotalMoney != null">goods_total_money = #{goodsTotalMoney},</if>
+            <if test="goodsTax != null">goods_tax = #{goodsTax},</if>
+        </trim>
+        where goods_id = #{goodsId}
+    </update>
+
+    <delete id="deleteOrderDetailsById" parameterType="Long">
+        delete from shop_order_details where goods_id = #{goodsId}
+    </delete>
+
+    <delete id="deleteOrderDetailsByIds" parameterType="String">
+        delete from shop_order_details where goods_id in 
+        <foreach item="goodsId" collection="array" open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+    </delete>
+
+</mapper>

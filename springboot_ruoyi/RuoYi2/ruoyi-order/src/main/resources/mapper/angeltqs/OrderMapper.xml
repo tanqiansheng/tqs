@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.angeltqs.mapper.OrderMapper">
+    
+    <resultMap type="Order" id="OrderResult">
+        <result property="orderCode"    column="order_code"    />
+        <result property="orderCount"    column="order_count"    />
+        <result property="orderTotalMoney"    column="order_total_money"    />
+        <result property="vipName"    column="vip_name"    />
+        <result property="addess"    column="addess"    />
+        <result property="orderTax"    column="order_tax"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectOrderVo">
+        select order_code, order_count, order_total_money, vip_name, addess, order_tax, create_by, create_time, update_time from shop_order
+    </sql>
+
+    <select id="selectOrderList" parameterType="Order" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        <where>  
+            <if test="orderCount != null  and orderCount != ''"> and order_count = #{orderCount}</if>
+            <if test="orderTotalMoney != null "> and order_total_money = #{orderTotalMoney}</if>
+            <if test="vipName != null  and vipName != ''"> and vip_name like concat('%', #{vipName}, '%')</if>
+            <if test="addess != null  and addess != ''"> and addess = #{addess}</if>
+            <if test="orderTax != null "> and order_tax = #{orderTax}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderById" parameterType="String" resultMap="OrderResult">
+        <include refid="selectOrderVo"/>
+        where order_code = #{orderCode}
+    </select>
+        
+    <insert id="insertOrder" parameterType="Order">
+        insert into shop_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">order_code,</if>
+            <if test="orderCount != null and orderCount != ''">order_count,</if>
+            <if test="orderTotalMoney != null">order_total_money,</if>
+            <if test="vipName != null">vip_name,</if>
+            <if test="addess != null">addess,</if>
+            <if test="orderTax != null">order_tax,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderCode != null">#{orderCode},</if>
+            <if test="orderCount != null and orderCount != ''">#{orderCount},</if>
+            <if test="orderTotalMoney != null">#{orderTotalMoney},</if>
+            <if test="vipName != null">#{vipName},</if>
+            <if test="addess != null">#{addess},</if>
+            <if test="orderTax != null">#{orderTax},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrder" parameterType="Order">
+        update shop_order
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderCount != null and orderCount != ''">order_count = #{orderCount},</if>
+            <if test="orderTotalMoney != null">order_total_money = #{orderTotalMoney},</if>
+            <if test="vipName != null">vip_name = #{vipName},</if>
+            <if test="addess != null">addess = #{addess},</if>
+            <if test="orderTax != null">order_tax = #{orderTax},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where order_code = #{orderCode}
+    </update>
+
+    <delete id="deleteOrderById" parameterType="String">
+        delete from shop_order where order_code = #{orderCode}
+    </delete>
+
+    <delete id="deleteOrderByIds" parameterType="String">
+        delete from shop_order where order_code in 
+        <foreach item="orderCode" collection="array" open="(" separator="," close=")">
+            #{orderCode}
+        </foreach>
+    </delete>
+
+</mapper>
