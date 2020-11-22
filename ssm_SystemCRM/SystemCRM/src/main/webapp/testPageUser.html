@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<base th:href="@{/}" />
+<!-- 引入JQuery -->
+<script type="text/javascript" src="resources/js/easyui/jquery.min.js"></script>
+
+<!-- 引入EasyUI -->
+<script type="text/javascript"
+	src="resources/js/easyui/jquery.easyui.min.js"></script>
+
+<!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+<script type="text/javascript"
+	src="resources/js/easyui/locale/easyui-lang-zh_CN.js"></script>
+
+<!-- 引入EasyUI的样式文件-->
+<link rel="stylesheet"
+	href="resources/js/easyui/themes/default/easyui.css" type="text/css" />
+
+
+<!-- 引入EasyUI的图标样式文件-->
+<link rel="stylesheet" href="resources/js/easyui/themes/icon.css"
+	type="text/css" />
+
+<script type="text/javascript" src="resources/js/layer/layer.js"></script>
+
+<!-- 引入自己开发的JS 文件  -->
+<script type="text/javascript" src="resources/js/pageUser.js"></script>
+
+
+</head>
+<body>
+
+	<table id="dg"></table>
+
+	<div id="tb" style="padding: 5px;">
+		<a class="easyui-linkbutton" iconCls="icon-add" plain="true"
+			onclick="addUser()">增加</a> <a class="easyui-linkbutton"
+			iconCls="icon-edit" plain="true" onclick="updateUser()">修改</a> <a
+			class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+			onclick="deleteUser()">删除</a> <a class="easyui-linkbutton"
+			iconCls="icon-reload" plain="true" onclick="reloadUser()">刷新</a> <a
+			class="easyui-linkbutton" iconCls="icon-reload" plain="true"
+			url="testPageUser.html">返回</a>
+		<div style="padding: 5px;">
+			查询用户： <input class="easyui-searchbox" name="keyWord1"
+				style="width: 30%;">
+			<!-- 			条件1:
+			<input name="keyWord2" style="width: 80px;">
+			条件2:
+			<input name="keyWord3" style="width: 80px;"> -->
+			<a class="easyui-linkbutton" iconCls="icon-search" plain="true"
+				onclick="findPage();">查询</a>
+		</div>
+	</div>
+
+
+
+	<div id="dlg" style="width: 400px; height: 280px; padding: 10px 20px">
+
+		<form id="fm" method="post">
+			<div class="fitem">
+				编号: <input id="txtid" name="uid" style="width: 80px;"> <input
+					type="hidden" id="txtid" name="uid">
+			</div>
+			<div class="fitem">
+				<br> 所属部门: <input name="depId" style="width: 80px;">
+			</div>
+
+			<div class="fitem">
+				<br> 员工ID: <input name="employeeId" style="width: 80px;">
+			</div>
+			<div class="fitem">
+				<br> 姓名: <input name="userName" style="width: 80px;">
+			</div>
+			<div class="fitem">
+				<br> 密码: <input name="userPwd" style="width: 80px;">
+			</div>
+			<div class="fitem">
+				<br> 创建时间: <input name="createDate" style="width: 80px;">
+			</div>
+			<div class="fitem">
+				<br> 状态: <input name="status" style="width: 80px;">
+			</div>
+
+		</form>
+
+	</div>
+
+	<div id="dlg-buttons">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-ok"
+			onclick="saveUser();">保存</a> <a href="#" class="easyui-linkbutton"
+			iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+		<input type="button" value="展开" onclick='$("#dlg").panel("expand")' />
+		<input type="button" value="收起"
+			onclick='$("#dlg").panel("collapse")' />
+	</div>
+
+</body>
+</html>

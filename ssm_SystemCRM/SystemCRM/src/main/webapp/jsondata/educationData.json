@@ -1,0 +1,24 @@
+[{
+    "educationId":1,
+    "name":"小学"
+},{
+    "educationId":2,
+    "name":"初中"
+},{
+    "educationId":3,
+    "name":"高中"
+},{
+    "educationId":4,
+    "name":"大专"
+},{
+    "educationId":5,
+    "name":"本科"
+},
+{
+    "educationId":6,
+    "name":"硕士"
+},
+{
+    "educationId":7,
+    "name":"博士"
+}]

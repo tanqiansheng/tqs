@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<base th:href="@{/}"/>
+<!-- 引入JQuery -->
+<script type="text/javascript" src="resources/js/easyui/jquery.min.js"></script>
+
+<!-- 引入EasyUI -->
+<script type="text/javascript"
+	src="resources/js/easyui/jquery.easyui.min.js"></script>
+
+<!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+<script type="text/javascript"
+	src="resources/js/easyui/locale/easyui-lang-zh_CN.js"></script>
+
+<!-- 引入EasyUI的样式文件-->
+<link rel="stylesheet"
+	href="resources/js/easyui/themes/default/easyui.css" type="text/css" />
+
+
+<!-- 引入EasyUI的图标样式文件-->
+<link rel="stylesheet" href="resources/js/easyui/themes/icon.css"
+	type="text/css" />
+
+<!-- 引入自己开发的JS 文件  -->
+<script type="text/javascript" src="resources/js/pageEmployee.js"></script>
+<style type="text/css">
+.content1 {
+	float: left;
+}
+
+.content2 {
+float: left;
+}
+
+#dlg .fitem {
+	margin-left: 100px;
+	margin-top: 5px;
+}
+#dlg-buttons {
+	text-align: center;
+}
+.img img{
+		width: 110px;height: 110px;
+}
+.img {
+		margin-top: 20px;
+		margin-left: 160px;
+}
+</style>
+</head>
+<body>
+
+	<table id="dg"></table>
+
+	<div id="tb" style="padding: 5px;">
+		<a class="easyui-linkbutton" iconCls="icon-add" plain="true"
+			onclick="add()">增加</a> <a class="easyui-linkbutton"
+			iconCls="icon-edit" plain="true" onclick="update()">修改</a> <a
+			class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+			onclick="del()">删除</a> <a class="easyui-linkbutton"
+			iconCls="icon-reload" plain="true" onclick="reload()">刷新</a>
+		<div style="padding: 5px;">
+			查询用户： <input name="userName" style="width: 140px;"> 条件1: <input
+				name="userPwd" style="width: 140px;"> 条件2: <input name="id"
+				style="width: 140px;"> <a class="easyui-linkbutton"
+				iconCls="icon-search" plain="true" onclick="findPage();">查询</a>
+		</div>
+	</div>
+
+
+	<!-- 提交对话窗口的内容-->
+	<div id="dlg" style="width: 700px; height: 500px; padding: 10px 20px">
+
+		<form id="fm" method="post" class="easyui-form">
+			<div class="content1">
+				<div class="fitem" id="div_employeeId">
+					员&nbsp;&nbsp;工&nbsp;号: <input id="input_employeeId" name="employeeId"
+						style="width: 140px;" class="easyui-textbox" disabled="disabled">
+				</div>
+				<br>
+				<div class="fitem">
+					部&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;门: <input id="input_departmentId" name="departmentId"
+						style="width: 140px;" class="easyui-combobox"
+						url="/SystemCRM/department/list"
+						valueField="departmentId" textField="name" panelHeight="auto"
+						editable=false> </input>
+				</div>
+				<br>
+				<div class="fitem">
+					职&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;位: <input name="positionId" style="width: 140px;"
+						class="easyui-combobox"
+						url="/SystemCRM/position/list"
+						valueField="positionId" textField="name" panelHeight="auto"
+						editable=false> </input>
+				</div>
+				<div class="fitem">
+					<br> 姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名: <input name="name" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> 性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别: <input name="sex" style="width: 140px;"
+						class="easyui-combobox"
+						data-options="
+						valueField: 'id',
+						textField: 'text',
+						panelHeight: 'auto',
+						editable:false,
+						data: [{
+							id: '1',
+							text: '男'
+						},{
+							id: '0',
+							text: '女'
+						}]" />
+				</div>
+				<div class="fitem">
+					<br> 婚&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;否: <input name="married" style="width: 140px;"
+						class="easyui-combobox"
+						data-options="
+						valueField: 'id',
+						textField: 'text',
+						panelHeight: 'auto',
+						editable:false,
+						data: [{
+							id: true,
+							text: '已婚'
+						},{
+							id: false,
+							text: '未婚'
+						}]" />
+				</div>
+				<div class="fitem">
+					<br> 学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历: <input name="education" style="width: 140px;"
+						class="easyui-combobox" url="jsondata/educationData.json"
+						valueField="educationId" textField="name" method="get"
+						panelHeight="auto" editable=false> </input>
+				</div>
+				<div class="fitem">
+					<br> 身份证号: <input name="sid" style="width: 140px;" class="easyui-validatebox" data-options="required:true,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+			</div>
+
+
+			<div class="content2">
+			
+					<div class="img  ">
+						<img alt="" src="resources/img/tx/psc.jpg" >
+					</div>
+				
+				<div class="fitem">
+					<br> 邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:
+					 <input class="easyui-validatebox" name="email" validType="email" style="width: 140px;"   >
+				</div>
+				
+				<div class="fitem">
+					<br> 家庭住址: <input name="adders" style="width: 140px; " class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+
+				<div class="fitem">
+					<br> 入职日期: <input name="hireDate" class="easyui-datebox"
+						required="required" style="width: 140px;">
+				</div>
+				<div class="fitem" id="div_termDate">
+					<br> 离职日期: <input id="input_termDate" name="termDate"
+						class="easyui-datebox" style="width: 140px;">
+				</div>
+				<div class="fitem">
+					<br> 状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态: <input
+						id="input_status" name="status" style="width: 140px;"
+						class="easyui-combobox" url="jsondata/statusData.json"
+						valueField="id" textField="name" method="get" panelHeight="auto"
+						editable=false> </input>
+				</div>
+			</div>
+		</form>
+
+		<div id="dlg-buttons">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-ok"
+				onclick="save();">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" class="easyui-linkbutton"iconCls="icon-cancel"
+			 onclick="javascript:$('#dlg').dialog('close')">取消</a>
+		</div>
+
+	</div>
+
+
+</body>
+</html>

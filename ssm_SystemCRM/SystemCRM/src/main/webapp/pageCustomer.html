@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<base th:href="@{/}"/>
+<!-- 引入JQuery -->
+<script type="text/javascript" src="resources/js/easyui/jquery.min.js"></script>
+
+<!-- 引入EasyUI -->
+<script type="text/javascript"
+	src="resources/js/easyui/jquery.easyui.min.js"></script>
+
+<!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
+<script type="text/javascript"
+	src="resources/js/easyui/locale/easyui-lang-zh_CN.js"></script>
+
+<!-- 引入EasyUI的样式文件-->
+<link rel="stylesheet"
+	href="resources/js/easyui/themes/default/easyui.css" type="text/css" />
+
+
+<!-- 引入EasyUI的图标样式文件-->
+<link rel="stylesheet" href="resources/js/easyui/themes/icon.css"
+	type="text/css" />
+
+<!-- 引入自己开发的JS 文件  -->
+<script type="text/javascript" src="resources/js/pageCustomer.js"></script>
+<style type="text/css">
+.content1 {
+	float: left;
+}
+
+.content2 {
+float: left;
+}
+
+#dlg .fitem {
+	margin-left: 100px;
+	margin-top: 5px;
+}
+#dlg-buttons {
+	text-align: center;
+}
+.img img{
+		width: 110px;height: 110px;
+}
+.img {
+		margin-top: 20px;
+		margin-left: 160px;
+}
+</style>
+</head>
+<body>
+
+	<table id="dg"></table>
+
+	<div id="tb" style="padding: 5px;">
+		<a class="easyui-linkbutton" iconCls="icon-add" plain="true"
+			onclick="add()">增加</a> <a class="easyui-linkbutton"
+			iconCls="icon-edit" plain="true" onclick="update()">修改</a> <a
+			class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+			onclick="del()">删除</a> <a class="easyui-linkbutton"
+			iconCls="icon-reload" plain="true" onclick="reload()">刷新</a>
+		<div style="padding: 5px;">
+			查询用户： <input name="userName" style="width: 140px;"> 条件1: <input
+				name="userPwd" style="width: 140px;"> 条件2: <input name="id"
+				style="width: 140px;"> <a class="easyui-linkbutton"
+				iconCls="icon-search" plain="true" onclick="findPage();">查询</a>
+		</div>
+	</div>
+
+
+	<!-- 提交对话窗口的内容-->
+	<div id="dlg" style="width: 700px; height: 500px; padding: 10px 20px">
+
+		<form id="fm" method="post" class="easyui-form">
+			<div class="content1">
+				<div class="fitem" id="div_employeeId">
+					客户id: <input id="input_cid" name="cid"
+						style="width: 140px;" class="easyui-textbox" disabled="disabled">
+				</div>
+				<br>
+				<div class="fitem">
+						用户id <input id="input_uid" name="uid"
+						style="width: 140px;" class="easyui-combobox"
+						editable=false> </input>
+				</div>
+				<br>
+	
+				<div class="fitem">
+					<br> 姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名: <input name="name" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> 国&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;家: <input name="name" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> 地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址: <input name="name" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> url&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input name="name" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+			</div>
+
+
+			<div class="content2">
+			
+					<!-- <div class="img  ">
+						<img alt="" src="resources/img/tx/psc.jpg" >
+					</div> -->
+				
+				<div class="fitem">
+					<br> 邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱:
+					 <input class="easyui-validatebox" name="email" validType="email" style="width: 140px;"   >
+				</div>
+				<div class="fitem">
+					<br> 联系电话: <input name="phone" style="width: 140px; " class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				
+				<div class="fitem">
+					<br> 传真&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;： <input name=" fax" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> 其它联系方式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <input name="other" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> 行业&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：<input name="industry" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> 年营业额&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：<input name="annual_revenue" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> 开户银行&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：<input name="bank_of_deposit" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+				<div class="fitem">
+					<br> 银行帐号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;：<input name="bank_account" style="width: 140px;"  class="easyui-validatebox" data-options="required:false,validateOnCreate:false,validType:'length[3,10]'">
+				</div>
+
+				<div class="fitem">
+					<br> 创建时间: <input name="create_time" class="easyui-datebox"
+						required="required" style="width: 140px;">
+				</div>
+				<div class="fitem" id="update_time">
+					<br> 更新时间: <input id="input_update_timetermDate" name="termDate"
+						class="easyui-datebox" style="width: 140px;">
+				</div>
+				<div class="fitem" id="last_time">
+					<br> 最近跟进时间: <input id="last_time" name="termDate"
+						class="easyui-datebox" style="width: 140px;">
+				</div>
+			</div>
+		</form>
+
+		<div id="dlg-buttons">
+			<a href="#" class="easyui-linkbutton" iconCls="icon-ok"
+				onclick="save();">保存</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" class="easyui-linkbutton"iconCls="icon-cancel"
+			 onclick="javascript:$('#dlg').dialog('close')">取消</a>
+		</div>
+
+	</div>
+
+
+</body>
+</html>

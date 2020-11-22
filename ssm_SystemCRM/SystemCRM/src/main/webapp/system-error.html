@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<base th:href="@{/}"/>
+<script type="text/javascript" src="/resources/jquery/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button").click(function(){
+			// 相当于浏览器的后退按钮
+			window.history.back();
+		});
+	});
+</script>
+<style>
+	body{
+	background-color: 	#F0FFFF;
+	text-align: center;
+	}
+</style>
+</head>
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<div>
+					<a class="navbar-brand" href="index.html" style="font-size: 32px;">CRM系统平台</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+	
+		<h2 class="form-signin-heading" style="text-align: center;">
+			<i class="glyphicon glyphicon-log-in"></i> CRM系统消息
+		</h2>
+		<!-- 
+			requestScope对应的是存放request域数据的Map
+			requestScope.exception相当于request.getAttribute("exception")
+			requestScope.exception.message相当于exception.getMessage()
+		 -->
+		<!-- <h3 style="text-align: center;">${requestScope.exception.message }</h3> -->
+		<h3><span th:text="${requestScope.exception.message}">|报错啦！ </span>  </h3>
+		<button style="width: 150px;margin: 50px auto 0px auto;" class="btn btn-lg btn-success btn-block">点我返回上一步</button>
+	</div>
+</body>
+</html>
