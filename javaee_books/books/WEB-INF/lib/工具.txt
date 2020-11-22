@@ -1,0 +1,50 @@
+
+common工具包
+
+全域编码
+<filter>
+	<filter-name>EncdoingFilter</filter-name>
+	<filter-class>cn.itcast.filter.EncodingFilter</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>EncdoingFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+</filter-mapping>
+
+
+
+验证码
+
+<servlet>
+  <servlet-name>VerifyCodeServlet</servlet-name>
+  <servlet-class>cn.itcast.vcode.servlet.VerifyCodeServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+  <servlet-name>VerifyCodeServlet</servlet-name>
+  <url-pattern>/VerifyCodeServlet</url-pattern>
+</servlet-mapping>
+
+
+	<script type="text/javascript" src="<c:url value='/js/jquery-1.5.1.js'/>"></script>
+	<script type="text/javascript">
+		function change() {
+			$("#img").attr("src", "<c:url value='/VerifyCodeServlet?'/>" + new Date().getTime());
+		}
+	</script>
+…
+<form action="<c:url value='/UserServlet'/>" method="post">
+	<input type="hidden" name="method" value="regist"/>
+	验证码：<input type="text" name="verifyCode"/>
+	<img id="img" src="<c:url value='/VerifyCodeServlet'/>" border="1"/>
+	<a href="javascript:change();">换一张</a>
+	<br/>
+	<input type="submit" value="注册"/>
+</form>
+
+
+发邮件
+
+
+	Session session = MailUtils.createSession("smtp.163.com", "itcast_cxf", "itcastitcast");
+		Mail mail = new Mail("itcast_cxf@163.com", "itcast_cxf@126.com", "测试MailUtils", "这是正文！");
+		MailUtils.send(session, mail);
